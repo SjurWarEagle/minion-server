@@ -1,5 +1,5 @@
 import {Controller, Get, Header, Res} from '@nestjs/common';
-import {createReadStream} from 'fs';
+import {createReadStream, mkdirSync} from 'fs';
 import {MinionDna} from "./model/minion-dna";
 import {DnaRandomizerService} from "./dna-randomizer.service";
 import {DnaGenerationParameters} from "./model/dna-generation-parameter";
@@ -32,6 +32,7 @@ export class AppController {
     @Header('Content-Type', 'image/png')
     async getRenderedMinion(@Res() res): Promise<any> {
 
+        mkdirSync('tmp', {recursive: true});
         const outputFile = 'tmp/out-' + v4() + '.png';
 
         // Event emitter only stops the program from terminating before the async function has been run
