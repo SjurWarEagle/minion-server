@@ -7,7 +7,7 @@ const DOMParser = new (require('xmldom')).DOMParser;
 export class SvgManipulationService {
 
     public async applyDna(dna: MinionDna): Promise<string> {
-        let xmlContent = await readFileSync('src\\assets\\minions-svgrepo-com.svg').toLocaleString();
+        let xmlContent = await readFileSync('src/assets/minions-svgrepo-com.svg').toLocaleString();
         const document = DOMParser.parseFromString(xmlContent);
         // const groupDoubleEyes = document.getElementById('groupDoubleEyes');
         // groupDoubleEyes.parentNode.removeChild(groupDoubleEyes);
