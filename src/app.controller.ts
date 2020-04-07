@@ -1,4 +1,4 @@
-import {Controller, Get, Header, Res} from '@nestjs/common';
+import {Controller, Get, Header, Query, Res} from '@nestjs/common';
 import {createReadStream, mkdirSync} from 'fs';
 import {MinionDna} from "./model/minion-dna";
 import {DnaRandomizerService} from "./dna-randomizer.service";
@@ -6,6 +6,8 @@ import {DnaGenerationParameters} from "./model/dna-generation-parameter";
 import {EventEmitter} from "events";
 import {v4} from "uuid";
 import {SvgManipulationService} from "./services/svg-manipulation.service";
+import {isNullOrUndefined} from "util";
+
 const sharp = require('sharp');
 
 
@@ -28,9 +30,15 @@ export class AppController {
         return dnaRandomizerService.generateMinion(new DnaGenerationParameters());
     }
 
-    @Get('/render')
+    @Get('/render/')
     @Header('Content-Type', 'image/png')
-    async getRenderedMinion(@Res() res): Promise<any> {
+    async getRenderedMinion(@Query('width') width: string, @Query('height') height: string, @Res() res): Promise<any> {
+        const myWidth = !isNullOrUndefined(width)?Number.parseInt(width):500;
+        const myHeight = !isNullOrUndefined(height)?Number.parseInt(height):500;
+        return this.getRenderedMinionWithSize(myWidth, myHeight, res)
+    }
+
+    private async getRenderedMinionWithSize(width: number, height: number, @Res() res): Promise<any> {
 
         mkdirSync('tmp', {recursive: true});
         const outputFile = 'tmp/out-' + v4() + '.png';
@@ -42,7 +50,7 @@ export class AppController {
         });
 
         let svgManipulationService = new SvgManipulationService();
-        const svg= await svgManipulationService.applyDna(await this.getDna());
+        const svg = await svgManipulationService.applyDna(await this.getDna());
 
         return run();
 
@@ -52,7 +60,7 @@ export class AppController {
                     Buffer.from(svg),
                     {density: 500},
                 )
-                    .resize(512, 512, {
+                    .resize(width, height, {
                         fit: 'contain',
                     })
                     .png()
