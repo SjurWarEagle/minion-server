@@ -19,6 +19,7 @@ export class SvgManipulationService {
     this.setSkinColor(document, dna, skinColor);
     this.setCloth(document, dna);
     this.modifyEyes(document, dna);
+    this.setPocket(document, dna);
     this.setHair(document, dna.hairType);
 
     this.setItemInHands(document, 'leftHand', dna.leftHandItem);
@@ -136,6 +137,12 @@ export class SvgManipulationService {
         break;
       default:
         console.log(`Hair ${hair} unknown.`);
+    }
+  }
+
+  private setPocket(document: Document, dna: MinionDna): void {
+    if (Math.random() > 0.8) {
+      this.remove(document, 'pocket');
     }
   }
 
