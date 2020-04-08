@@ -1,7 +1,7 @@
 import { Chance } from 'chance';
 import * as chroma from 'chroma-js';
-import {MinionDna} from "./model/minion-dna";
-import {DnaGenerationParameters} from "./model/dna-generation-parameter";
+import { MinionDna } from './model/minion-dna';
+import { DnaGenerationParameters } from './model/dna-generation-parameter';
 
 /**
  * Generates the DNA for a minion by random values.
@@ -13,7 +13,10 @@ export class DnaRandomizerService {
   private chance = new Chance();
 
   private getItemInHandHand(): number {
-    return this.chance.weighted([0, 1, 2, 3, 4, 5, 6, 7], [60, 10, 10, 10, 2, 2, 2, 2]);
+    return this.chance.weighted(
+      [0, 1, 2, 3, 4, 5, 6, 7],
+      [60, 10, 10, 10, 2, 2, 2, 2],
+    );
   }
 
   private generateCloth(dna: MinionDna): void {
@@ -26,7 +29,9 @@ export class DnaRandomizerService {
     dna.cloths = rnd;
   }
 
-  public async generateMinion(dnaGenerationParameters?: DnaGenerationParameters): Promise<MinionDna> {
+  public async generateMinion(
+    dnaGenerationParameters?: DnaGenerationParameters,
+  ): Promise<MinionDna> {
     const dna = new MinionDna();
     dna.name = this.chance.name();
 
@@ -46,10 +51,14 @@ export class DnaRandomizerService {
       dna.leftHandItem = this.getItemInHandHand();
       dna.rightHandItem = this.getItemInHandHand();
       //prevent having the same item in both hands, it happened too often because chance.js has a bad random generator
-      holdsSameItem = dna.leftHandItem === dna.rightHandItem && dna.leftHandItem !== 0 && dna.rightHandItem !== 0;
+      holdsSameItem =
+        dna.leftHandItem === dna.rightHandItem &&
+        dna.leftHandItem !== 0 &&
+        dna.rightHandItem !== 0;
       //prevent item and sign, as item then is not visible
       signAndItem =
-        (dna.leftHandItem === 7 && dna.rightHandItem !== 0) || (dna.leftHandItem !== 0 && dna.rightHandItem === 7);
+        (dna.leftHandItem === 7 && dna.rightHandItem !== 0) ||
+        (dna.leftHandItem !== 0 && dna.rightHandItem === 7);
     }
 
     dna.twoEyes = this.chance.bool({ likelihood: 80 });
@@ -69,10 +78,7 @@ export class DnaRandomizerService {
       ) {
         color = chroma.random().num();
       } else {
-        color = chroma
-          .random()
-          .desaturate(255)
-          .num();
+        color = chroma.random().desaturate(255).num();
       }
       // console.log(chroma(color).luminance());
       // console.log('color',color);
