@@ -9,8 +9,6 @@ const sharp = require('sharp');
 
 @Controller()
 export class AppController {
-  constructor() {}
-
   @Get('/render/')
   @Header('Content-Type', 'image/png')
   async getRenderedMinion(
@@ -34,12 +32,10 @@ export class AppController {
       // process.exit()
     });
 
-    let svgManipulationService = new SvgManipulationService();
+    const svgManipulationService = new SvgManipulationService();
     const svg = await svgManipulationService.applyDna(
       await new DnaController().getDna(),
     );
-
-    return run();
 
     async function run() {
       try {
@@ -63,5 +59,7 @@ export class AppController {
         finishEventEmitter.emit('finish');
       }
     }
+
+    return run();
   }
 }

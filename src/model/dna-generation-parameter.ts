@@ -4,5 +4,5 @@
  * Check the different values for details.
  */
 export class DnaGenerationParameters {
-  public allowColoredEyes: boolean = false;
+  public allowColoredEyes = false;
 }

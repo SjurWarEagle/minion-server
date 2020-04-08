@@ -1,13 +1,8 @@
 import { Controller, Get, Header, Res } from '@nestjs/common';
-import { MinionDna } from './model/minion-dna';
-import { DnaRandomizerService } from './dna-randomizer.service';
-import { DnaGenerationParameters } from './model/dna-generation-parameter';
 import { EventEmitter } from 'events';
 
 @Controller()
 export class LinkController {
-  constructor() {}
-
   @Get('/link')
   @Header('Content-Type', 'text/html')
   public async getDna(@Res() response): Promise<string> {
@@ -17,11 +12,12 @@ export class LinkController {
       // process.exit();
     });
 
-    return;
-    '<html>' +
+    return (
+      '<html lang="en">' +
       '<body>' +
-      "<img src='http://localhost:3000/render?width=20&height=20'/>" +
+      "<img src='http://localhost:3000/render?width=20&height=20' alt=\"minion\"/>" +
       '' +
-      '</html>';
+      '</html>'
+    );
   }
 }

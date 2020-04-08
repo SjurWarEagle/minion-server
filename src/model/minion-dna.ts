@@ -6,7 +6,7 @@ export class MinionDnaEye {
 }
 
 export class MinionDna {
-  public name: string = 'TODO';
+  public name = 'TODO';
   public twoEyes: boolean;
   public eyeLeft: MinionDnaEye;
   public eyeRight: MinionDnaEye;

@@ -3,8 +3,6 @@ import { AppController } from './app.controller';
 import { DnaController } from './dna.controller';
 import { LinkController } from './link.controller';
 import { ServeStaticModule } from '@nestjs/serve-static';
-import { doc } from 'prettier';
-import join = doc.builders.join;
 
 @Module({
   imports: [

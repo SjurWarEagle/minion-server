@@ -69,7 +69,7 @@ export class DnaRandomizerService {
 
     //grayscale pupils, color ones looked strange
     // maybe add them later with a low chance
-    let color: number = 0xffffff;
+    let color = 0xffffff;
     while (chroma(color).luminance() > 0.25) {
       if (
         dnaGenerationParameters &&

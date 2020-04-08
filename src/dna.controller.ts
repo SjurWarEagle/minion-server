@@ -6,8 +6,6 @@ import { EventEmitter } from 'events';
 
 @Controller()
 export class DnaController {
-  constructor() {}
-
   @Get('/dna')
   @Header('Content-Type', 'application/json')
   public async getDna(): Promise<MinionDna> {

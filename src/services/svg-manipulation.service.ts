@@ -6,7 +6,7 @@ const DOMParser = new (require('xmldom').DOMParser)();
 
 export class SvgManipulationService {
   public async applyDna(dna: MinionDna): Promise<string> {
-    let xmlContent = await readFileSync(
+    const xmlContent = await readFileSync(
       'src/assets/minions-svgrepo-com.svg',
     ).toLocaleString();
     const document = DOMParser.parseFromString(xmlContent);
@@ -141,7 +141,7 @@ export class SvgManipulationService {
   }
 
   private setPocket(document: Document, dna: MinionDna): void {
-    if (Math.random() > 0.8) {
+    if (dna.pocket) {
       this.remove(document, 'pocket');
     }
   }
