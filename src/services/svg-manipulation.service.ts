@@ -2,6 +2,7 @@ import { MinionDna, MinionDnaEye } from '../model/minion-dna';
 import { readFileSync } from 'fs';
 import * as chroma from 'chroma-js';
 import { isNullOrUndefined } from 'util';
+
 const DOMParser = new (require('xmldom').DOMParser)();
 
 export class SvgManipulationService {
@@ -21,6 +22,7 @@ export class SvgManipulationService {
     this.modifyEyes(document, dna);
     this.setPocket(document, dna);
     this.setHair(document, dna.hairType);
+    this.setMood(document, dna.mood);
 
     this.setItemInHands(document, 'leftHand', dna.leftHandItem);
     this.setItemInHands(document, 'rightHand', dna.rightHandItem);
@@ -29,11 +31,11 @@ export class SvgManipulationService {
   }
 
   private modifyEyes(document: Document, dna: MinionDna): void {
+    //TODO use both eyes
+    const color = '#' + dna.eye.color.toString(16);
     if (dna.twoEyes) {
-      //TODO use both eyes
-      const color = '#' + dna.eye.color.toString(16);
-      // this.remove(document, 'doubleEyesPupilRight').style = `fill:${color} ;stroke:${color} ;stroke-width:0.04412191`;
-      // this.remove(document, 'doubleEyesPupilLeft').style = `fill:${color} ;stroke:${color} ;stroke-width:0.04412191`;
+      this.setStroke(document, 'doubleEyesPupilRight', color);
+      this.setStroke(document, 'doubleEyesPupilLeft', color);
 
       this.setEyes(
         document.getElementById('eyeRight'),
@@ -46,12 +48,12 @@ export class SvgManipulationService {
 
       this.remove(document, 'groupSingleEye');
     } else {
-      const color = '#' + dna.eye.color.toString(16);
-      // document.getElementById('singleEyePupilIris').style = `fill:${color} ;stroke:${color} ;stroke-width:0.04412191`;
+      this.setStroke(document, 'singleEyePupilIris', color);
       this.setEye(document.getElementById('eye'), dna.eyeRight);
       this.remove(document, 'groupDoubleEyes');
     }
   }
+
   private remove(document: Document, id: string) {
     const element = document.getElementById(id);
     if (!isNullOrUndefined(element)) {
@@ -59,9 +61,23 @@ export class SvgManipulationService {
     }
   }
 
-  private setFill(document: Document, id: string, fill: string) {
+  private setStroke(document: Document, id: string, fill: string): void {
     const element = document.getElementById(id);
 
+    if (isNullOrUndefined(element)) {
+      console.error(`Could not find element with id=${id}`);
+      return;
+    }
+    element.setAttribute('style', `stroke:${fill};stroke-width: 0.2 `);
+  }
+
+  private setFill(document: Document, id: string, fill: string): void {
+    const element = document.getElementById(id);
+
+    if (isNullOrUndefined(element)) {
+      console.error(`Could not find element with id=${id}`);
+      return;
+    }
     element.setAttribute('style', `fill:${fill}; `);
     // console.log('id',id);
     // console.log('element',element);
@@ -101,6 +117,35 @@ export class SvgManipulationService {
   ): void {
     pupilLeft.setAttribute('r', leftEye.eyeRadius.toString());
     pupilRight.setAttribute('r', rightEye.eyeRadius.toString());
+  }
+
+  private mapRange = (
+    value: number,
+    x1: number,
+    y1: number,
+    x2: number,
+    y2: number,
+  ): number => ((value - x1) * (y2 - x2)) / (y1 - x1) + x2;
+
+  // M96.324,126.494C116.404,144.705
+  private setMood(document: Document, mood: number): void {
+    const element = document.getElementById('mouth');
+    //console.log('element', element);
+    const d = element.getAttribute('d');
+    //console.log('d', d);
+    const dd = d ? d.split(' ') : [];
+    //console.log('dd', dd);
+
+    const entry = dd[0].split(',');
+    //console.log('entry', entry);
+    // console.log('mood', mood);
+    entry[2] = this.mapRange(mood, -50, 100, 110, 155).toString();
+    // console.log('entry[2]', entry[2]);
+    //console.log('entry', entry);
+    dd[0] = entry.join(',');
+    // console.log('dd',dd);
+
+    element.setAttribute('d', dd.join(' '));
   }
 
   private setHair(document: Document, hair: number): void {
@@ -175,6 +220,7 @@ export class SvgManipulationService {
         console.log(`cloth ${dna.cloths} unknown.`);
     }
   }
+
   private setItemInHands(document: Document, hand: string, itemInHand: number) {
     switch (itemInHand) {
       case 0:

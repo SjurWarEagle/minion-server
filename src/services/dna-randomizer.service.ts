@@ -1,7 +1,7 @@
 import { Chance } from 'chance';
 import * as chroma from 'chroma-js';
-import { MinionDna } from './model/minion-dna';
-import { DnaGenerationParameters } from './model/dna-generation-parameter';
+import { MinionDna } from '../model/minion-dna';
+import { DnaGenerationParameters } from '../model/dna-generation-parameter';
 
 /**
  * Generates the DNA for a minion by random values.
