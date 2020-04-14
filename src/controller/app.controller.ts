@@ -14,7 +14,7 @@ import { isNullOrUndefined } from 'util';
 import { DnaController } from './dna.controller';
 import { MinionDna } from '../model/minion-dna';
 
-const sharp = require('sharp');
+import * as sharp from 'sharp';
 
 @Controller()
 export class AppController {
@@ -28,7 +28,7 @@ export class AppController {
   ): Promise<any> {
     const myWidth = !isNullOrUndefined(width) ? Number.parseInt(width) : 500;
     const myHeight = !isNullOrUndefined(height) ? Number.parseInt(height) : 500;
-    let dna = await new DnaController().getDna();
+    const dna = await new DnaController().getDna();
     return this.getRenderedMinionWithSize(myWidth, myHeight, dna, res);
   }
 
@@ -43,7 +43,7 @@ export class AppController {
     const myWidth = !isNullOrUndefined(width) ? Number.parseInt(width) : 500;
     const myHeight = !isNullOrUndefined(height) ? Number.parseInt(height) : 500;
     //TODO add some checks, that this really is a MinionDna
-    let dna = body as MinionDna;
+    const dna = body as MinionDna;
     return this.getRenderedMinionWithSize(myWidth, myHeight, dna, res);
   }
 

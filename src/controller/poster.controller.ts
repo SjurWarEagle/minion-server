@@ -1,8 +1,15 @@
-import { Controller, Get, Header, Query, Res } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Header,
+  PayloadTooLargeException,
+  Query,
+  Request,
+  Res,
+} from '@nestjs/common';
 import { EventEmitter } from 'events';
-const sharp = require('sharp');
+import * as sharp from 'sharp';
 import { Readable } from 'stream';
-import { AppController } from './app.controller';
 import { SvgManipulationService } from '../services/svg-manipulation.service';
 import { DnaRandomizerService } from '../services/dna-randomizer.service';
 
@@ -15,6 +22,7 @@ export class PosterController {
     @Query('height') height: string,
     @Query('x') x: string,
     @Query('y') y: string,
+    @Request() request,
     @Res() res,
   ): Promise<any> {
     // Event emitter only stops the program from terminating before the async function has been run
@@ -27,6 +35,12 @@ export class PosterController {
     const minionHeightPixel = parseInt(height, 10);
     const minionWidthCnt = parseInt(x, 10);
     const minionHeightCnt = parseInt(y, 10);
+
+    console.log(
+      `Poster with x=${minionWidthCnt}, y=${minionHeightCnt} and size of minion with height=${minionHeightPixel} width=${minionWidthPixel} requested by ${request.clientIp}.`,
+    );
+
+    this.validateParameters(minionWidthCnt, minionHeightCnt);
 
     const svgManipulationService = new SvgManipulationService();
 
@@ -83,7 +97,7 @@ export class PosterController {
     minionWidthPixel: number,
     minionHeightPixel: number,
   ): Promise<Buffer> {
-    const buffer = await sharp(Buffer.from(svg), { density: 500 })
+    return await sharp(Buffer.from(svg), { density: 500 })
       .resize(minionWidthPixel, minionHeightPixel, {
         fit: 'contain',
         kernel: 'mitchell',
@@ -91,7 +105,18 @@ export class PosterController {
       .sharpen()
       .png()
       .toBuffer();
+  }
 
-    return buffer;
+  private validateParameters(
+    minionWidthCnt: number,
+    minionHeightCnt: number,
+  ): void {
+    if (minionWidthCnt > 20) {
+      throw new PayloadTooLargeException('x > 20', 'x > 20');
+    }
+
+    if (minionHeightCnt > 20) {
+      throw new PayloadTooLargeException('y > 20', 'y > 20');
+    }
   }
 }
