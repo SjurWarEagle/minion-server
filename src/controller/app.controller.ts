@@ -9,10 +9,10 @@ import {
 } from '@nestjs/common';
 import { Readable } from 'stream';
 import { EventEmitter } from 'events';
-import { SvgManipulationService } from './services/svg-manipulation.service';
+import { SvgManipulationService } from '../services/svg-manipulation.service';
 import { isNullOrUndefined } from 'util';
 import { DnaController } from './dna.controller';
-import { MinionDna } from './model/minion-dna';
+import { MinionDna } from '../model/minion-dna';
 
 const sharp = require('sharp');
 
@@ -62,7 +62,7 @@ export class AppController {
     const svgManipulationService = new SvgManipulationService();
     const svg = await svgManipulationService.applyDna(dna);
 
-    async function run() {
+    async function run(): Promise<void> {
       try {
         const buf = await sharp(Buffer.from(svg), { density: 500 })
           .resize(width, height, {

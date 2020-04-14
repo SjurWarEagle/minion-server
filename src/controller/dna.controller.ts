@@ -1,7 +1,7 @@
 import { Controller, Get, Header } from '@nestjs/common';
-import { MinionDna } from './model/minion-dna';
-import { DnaRandomizerService } from './services/dna-randomizer.service';
-import { DnaGenerationParameters } from './model/dna-generation-parameter';
+import { MinionDna } from '../model/minion-dna';
+import { DnaRandomizerService } from '../services/dna-randomizer.service';
+import { DnaGenerationParameters } from '../model/dna-generation-parameter';
 import { EventEmitter } from 'events';
 
 @Controller()
