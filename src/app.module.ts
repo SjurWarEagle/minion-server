@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './controller/app.controller';
 import { DnaController } from './controller/dna.controller';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { PosterController } from './controller/poster.controller';
+import { RenderController } from './controller/render.controller';
 
 @Module({
   imports: [
@@ -11,7 +11,7 @@ import { PosterController } from './controller/poster.controller';
     }),
   ],
   controllers: [
-    AppController, //
+    RenderController, //
     PosterController,
     DnaController,
   ],

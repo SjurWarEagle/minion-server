@@ -29,11 +29,13 @@
     "@nestjs/core": "7.0.7",
     "@nestjs/platform-express": "7.0.7",
     "@nestjs/serve-static": "2.1.0",
+    "@nestjs/swagger": "^4.5.1",
     "chance": "1.1.4",
     "chroma-js": "2.1.0",
     "reflect-metadata": "0.1.13",
     "request-ip": "^2.1.3",
     "rxjs": "6.5.5",
+    "swagger-ui-express": "^4.1.4",
     "uuid": "7.0.3",
     "xml2js": "0.4.23",
     "xmldom": "0.3.0"

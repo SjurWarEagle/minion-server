@@ -17,7 +17,7 @@ import { MinionDna } from '../model/minion-dna';
 import * as sharp from 'sharp';
 
 @Controller()
-export class AppController {
+export class RenderController {
   @Get('/render/')
   @Get('/renderRandom/')
   @Header('Content-Type', 'image/png')
@@ -44,6 +44,23 @@ export class AppController {
     const myHeight = !isNullOrUndefined(height) ? Number.parseInt(height) : 500;
     //TODO add some checks, that this really is a MinionDna
     const dna = body as MinionDna;
+    return this.getRenderedMinionWithSize(myWidth, myHeight, dna, res);
+  }
+
+  @Get('/renderDna/')
+  @Header('Content-Type', 'image/png')
+  async getRenderedMinionFromDna2(
+    @Query('width') width: string,
+    @Query('height') height: string,
+    @Query('dna') dnaString: string,
+    @Body() body,
+    @Res() res,
+  ): Promise<any> {
+    const myWidth = !isNullOrUndefined(width) ? Number.parseInt(width) : 500;
+    const myHeight = !isNullOrUndefined(height) ? Number.parseInt(height) : 500;
+    // TODO add some checks, that this really is a MinionDna
+    //console.log('dnaString', decodeURI(dnaString));
+    const dna = JSON.parse(decodeURI(dnaString)) as MinionDna;
     return this.getRenderedMinionWithSize(myWidth, myHeight, dna, res);
   }
 
