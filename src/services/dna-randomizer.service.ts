@@ -2,6 +2,7 @@ import { Chance } from 'chance';
 import * as chroma from 'chroma-js';
 import { MinionDna } from '../model/minion-dna';
 import { DnaGenerationParameters } from '../model/dna-generation-parameter';
+import { DnaMerger } from './dna-merger';
 
 /**
  * Generates the DNA for a minion by random values.
@@ -20,7 +21,7 @@ export class DnaRandomizerService {
   }
 
   private generateCloth(dna: MinionDna): void {
-    const rnd = this.chance.weighted([0, 1, 2, 3], [2, 2, 90, 2]);
+    const rnd = this.chance.weighted([0, 1, 2, 3, 4], [2, 2, 90, 2, 100]);
     dna.pocket = false;
 
     if (rnd === 2) {
@@ -106,5 +107,12 @@ export class DnaRandomizerService {
     };
 
     return dna;
+  }
+
+  public async generateChild(
+    dnaFather: MinionDna,
+    dnaMother: MinionDna,
+  ): Promise<MinionDna> {
+    return new DnaMerger().generateChild(dnaFather, dnaMother);
   }
 }

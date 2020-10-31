@@ -21,7 +21,7 @@ export class SvgManipulationService {
     this.setCloth(document, dna);
     this.modifyEyes(document, dna);
     this.setPocket(document, dna);
-    this.setHair(document, dna.hairType);
+    this.setHair(document, dna.hairType, dna.cloths);
     this.setMood(document, dna.mood);
 
     this.setItemInHands(document, 'leftHand', dna.leftHandItem);
@@ -148,7 +148,11 @@ export class SvgManipulationService {
     element.setAttribute('d', dd.join(' '));
   }
 
-  private setHair(document: Document, hair: number): void {
+  private setHair(document: Document, hair: number, cloths: number): void {
+    if (cloths === 4) {
+      hair = 0;
+    }
+
     switch (hair) {
       case 0:
         this.remove(document, 'hairSpiked');
@@ -197,24 +201,35 @@ export class SvgManipulationService {
         this.remove(document, 'fancyDress');
         this.remove(document, 'workingCloth');
         this.remove(document, 'hawaii');
+        this.remove(document, 'armor');
         break;
       case 1:
         this.remove(document, 'underwear');
         // document.getElementById('fancyDress').remove();
         this.remove(document, 'workingCloth');
         this.remove(document, 'hawaii');
+        this.remove(document, 'armor');
         break;
       case 2:
         this.remove(document, 'underwear');
         this.remove(document, 'fancyDress');
         // document.getElementById('workingCloth').remove();
         this.remove(document, 'hawaii');
+        this.remove(document, 'armor');
         break;
       case 3:
         this.remove(document, 'underwear');
         this.remove(document, 'fancyDress');
         this.remove(document, 'workingCloth');
         // document.getElementById('hawaii').remove();
+        this.remove(document, 'armor');
+        break;
+      case 4:
+        this.remove(document, 'underwear');
+        this.remove(document, 'fancyDress');
+        this.remove(document, 'workingCloth');
+        this.remove(document, 'hawaii');
+        // this.remove(document, 'armor');
         break;
       default:
         console.log(`cloth ${dna.cloths} unknown.`);
