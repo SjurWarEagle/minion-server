@@ -17,6 +17,8 @@ export class SvgManipulationService {
     const colorScale = chroma.scale(['FCE029', 'FFC120']).domain([0, 100]);
     const skinColor = colorScale(dna.skinColor).hex();
 
+    this.setSpeechText(document, dna);
+
     this.setSkinColor(document, dna, skinColor);
     this.setCloth(document, dna);
     this.modifyEyes(document, dna);
@@ -192,6 +194,28 @@ export class SvgManipulationService {
   private setPocket(document: Document, dna: MinionDna): void {
     if (dna.pocket) {
       this.remove(document, 'pocket');
+    }
+  }
+
+  private setSpeechText(document: Document, dna: MinionDna): void {
+    console.log('dna.speechText', dna.speechText);
+    if (!dna.speechText) {
+      this.remove(document, 'speech');
+    } else {
+      for (let i = 0; i < 5; i++) {
+        const element = document.getElementById('speechTextLine' + i);
+        if (!element) {
+          console.log('Error ' + i);
+          continue;
+        }
+        if (!dna.speechText[i] || dna.speechText[i].length === 0) {
+          element.parentNode.removeChild(element);
+        }
+        // console.log(i);
+        // console.log(dna.speechText[i ]);
+        (element.lastChild as any).nodeValue = dna.speechText[i];
+        (element.lastChild as any).data = dna.speechText[i];
+      }
     }
   }
 

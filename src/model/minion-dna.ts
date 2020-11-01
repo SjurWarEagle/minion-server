@@ -20,6 +20,10 @@ export class MinionDna {
   public leftHandItem: number;
   public rightHandItem: number;
   /**
+   * The text the minion is saying in the speech bubble
+   */
+  public speechText: string[] = ['', '', '', '', '', ''];
+  /**
    * The way the mouth is formed
    */
   public mood: number;
