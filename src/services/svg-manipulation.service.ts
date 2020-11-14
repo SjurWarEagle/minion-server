@@ -199,7 +199,7 @@ export class SvgManipulationService {
 
   private setSpeechText(document: Document, dna: MinionDna): void {
     console.log('dna.speechText', dna.speechText);
-    if (!dna.speechText) {
+    if (this.isSpeechEmpty(dna.speechText)) {
       this.remove(document, 'speech');
     } else {
       for (let i = 0; i < 5; i++) {
@@ -208,15 +208,34 @@ export class SvgManipulationService {
           console.log('Error ' + i);
           continue;
         }
-        if (!dna.speechText[i] || dna.speechText[i].length === 0) {
-          element.parentNode.removeChild(element);
-        }
+        ///todo do we need to remove empty containers?
+        // if (this.isSpeechEmpty(dna.speechText)) {
+        //   element.parentNode.removeChild(element);
+        // }
         // console.log(i);
         // console.log(dna.speechText[i ]);
         (element.lastChild as any).nodeValue = dna.speechText[i];
         (element.lastChild as any).data = dna.speechText[i];
       }
     }
+  }
+
+  private isSpeechEmpty(speechText: string[]): boolean {
+    if (speechText === null || speechText === undefined) {
+      return true;
+    }
+    if (speechText.length === 0) {
+      return true;
+    }
+    let empty = true;
+    for (let i = 0; i < speechText.length; i++) {
+      if (!isNullOrUndefined(speechText[i]) && speechText[i] !== '') {
+        console.log('>' + speechText[i] + '<');
+        empty = false;
+      }
+    }
+    console.log('empty' + empty);
+    return empty;
   }
 
   private setCloth(document: Document, dna: MinionDna): void {
