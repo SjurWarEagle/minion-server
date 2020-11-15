@@ -17,7 +17,9 @@ export class SvgManipulationService {
     const colorScale = chroma.scale(['FCE029', 'FFC120']).domain([0, 100]);
     const skinColor = colorScale(dna.skinColor).hex();
 
+    this.speechRealign(dna);
     this.setSpeechText(document, dna);
+    this.setSpeechBubbleSize(document, dna);
 
     this.setSkinColor(document, dna, skinColor);
     this.setCloth(document, dna);
@@ -197,26 +199,90 @@ export class SvgManipulationService {
     }
   }
 
+  private setSpeechBubbleSize(document: Document, dna: MinionDna): void {
+    if (this.isSpeechEmpty(dna.speechText)) {
+      return;
+    }
+
+    let speechBubble = document.getElementById('speechBubble');
+    let path = speechBubble.getAttribute('d');
+    const shiftDown = (dna.speechText.length - 4) * 10;
+    // left center
+    path = path.replace(
+      '4.993,28.117L4.993,61.634C4.993,69.3',
+      '4.993,28.117L4.993,' +
+        (61.6 + shiftDown) +
+        'C4.993,' +
+        (69.3 + shiftDown),
+    );
+    // right center
+    path = path.replace('72.465,69.311', '72.465,' + (shiftDown + 69.3));
+    path = path.replace(
+      '72.465,61.634L72.465,28.117Z',
+      '72.465,' + (61.6 + shiftDown) + 'L72.465,28.117Z',
+    );
+    // bottom
+    path = path.split(',75.5').join(',' + (shiftDown + 75.5));
+    speechBubble.setAttribute('d', path);
+  }
+
+  private speechRealign(dna: MinionDna): void {
+    const maxLength = 26;
+    const newTextBlock: string[] = [];
+    dna.speechText.forEach((text) => {
+      let newLine = '';
+      text.split(' ').forEach((word) => {
+        if (newLine.length + word.length < maxLength) {
+          newLine += word;
+          newLine += ' ';
+        } else {
+          newTextBlock.push(newLine);
+          newLine = word + ' ';
+        }
+      });
+      newTextBlock.push(newLine);
+    });
+    dna.speechText = newTextBlock;
+  }
+
   private setSpeechText(document: Document, dna: MinionDna): void {
-    console.log('dna.speechText', dna.speechText);
     if (this.isSpeechEmpty(dna.speechText)) {
       this.remove(document, 'speech');
     } else {
-      for (let i = 0; i < 5; i++) {
-        const element = document.getElementById('speechTextLine' + i);
-        if (!element) {
-          console.log('Error ' + i);
-          continue;
+      for (let i = 0; i < dna.speechText.length; i++) {
+        if (i === 0) {
+          let element = document.getElementById('speechTextLine' + i);
+          (element.lastChild as any).nodeValue = dna.speechText[i];
+          (element.lastChild as any).data = dna.speechText[i];
+        } else {
+          let elementForCloning = document.getElementById('speechTextLine0');
+          // console.log('i=' + i);
+          // console.log('elementForCloning=' + elementForCloning);
+
+          let element: HTMLElement = document.createElement('text');
+          element.appendChild(document.createElement('text'));
+          // let element: HTMLElement = Object.assign(
+          //   document.createElement('text'),
+          //   elementForCloning,
+          // );
+
+          // console.log(JSON.stringify(element));
+          // console.log(JSON.stringify(elementForCloning));
+          element.setAttribute('id', 'speechText' + i);
+          element.setAttribute('y', 8 * i + 'px');
+          element.setAttribute('x', elementForCloning.getAttribute('x'));
+          element.setAttribute(
+            'style',
+            elementForCloning.getAttribute('style'),
+          );
+          // console.log('ele.x=' + element.getAttribute('x'));
+          // console.log('ele.y=' + element.getAttribute('y'));
+          (element as any).textContent = dna.speechText[i];
+          elementForCloning.parentNode.appendChild(element);
         }
-        ///todo do we need to remove empty containers?
-        // if (this.isSpeechEmpty(dna.speechText)) {
-        //   element.parentNode.removeChild(element);
-        // }
-        // console.log(i);
-        // console.log(dna.speechText[i ]);
-        (element.lastChild as any).nodeValue = dna.speechText[i];
-        (element.lastChild as any).data = dna.speechText[i];
       }
+      // ///todo do we need to remove empty containers?
+      // //   element.parentNode.removeChild(element);
     }
   }
 
@@ -230,11 +296,11 @@ export class SvgManipulationService {
     let empty = true;
     for (let i = 0; i < speechText.length; i++) {
       if (!isNullOrUndefined(speechText[i]) && speechText[i] !== '') {
-        console.log('>' + speechText[i] + '<');
+        // console.log('>' + speechText[i] + '<');
         empty = false;
       }
     }
-    console.log('empty' + empty);
+    // console.log('empty:' + empty);
     return empty;
   }
 
