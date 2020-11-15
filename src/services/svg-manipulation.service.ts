@@ -227,7 +227,7 @@ export class SvgManipulationService {
   }
 
   private speechRealign(dna: MinionDna): void {
-    const maxLength = 26;
+    const maxLength = 25;
     const newTextBlock: string[] = [];
     dna.speechText.forEach((text) => {
       let newLine = '';
