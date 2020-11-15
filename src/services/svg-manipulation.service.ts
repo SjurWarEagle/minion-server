@@ -295,7 +295,7 @@ export class SvgManipulationService {
     }
     let empty = true;
     for (let i = 0; i < speechText.length; i++) {
-      if (!isNullOrUndefined(speechText[i]) && speechText[i] !== '') {
+      if (!isNullOrUndefined(speechText[i]) && speechText[i].trim() !== '') {
         // console.log('>' + speechText[i] + '<');
         empty = false;
       }
