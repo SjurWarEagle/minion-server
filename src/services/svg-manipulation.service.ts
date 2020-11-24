@@ -153,7 +153,7 @@ export class SvgManipulationService {
   }
 
   private setHair(document: Document, hair: number, cloths: number): void {
-    if (cloths === 4) {
+    if (cloths === 4 || cloths === 5) {
       hair = 0;
     }
 
@@ -194,7 +194,12 @@ export class SvgManipulationService {
   }
 
   private setPocket(document: Document, dna: MinionDna): void {
-    if (dna.pocket) {
+    if (
+      !dna.pocket ||
+      dna.cloths === 0 ||
+      dna.cloths === 1 ||
+      dna.cloths === 3
+    ) {
       this.remove(document, 'pocket');
     }
   }
@@ -307,10 +312,12 @@ export class SvgManipulationService {
   private setCloth(document: Document, dna: MinionDna): void {
     switch (dna.cloths) {
       case 0:
+        // this.remove(document, 'underwear');
         this.remove(document, 'fancyDress');
         this.remove(document, 'workingCloth');
         this.remove(document, 'hawaii');
         this.remove(document, 'armor');
+        this.remove(document, 'batman');
         break;
       case 1:
         this.remove(document, 'underwear');
@@ -318,6 +325,7 @@ export class SvgManipulationService {
         this.remove(document, 'workingCloth');
         this.remove(document, 'hawaii');
         this.remove(document, 'armor');
+        this.remove(document, 'batman');
         break;
       case 2:
         this.remove(document, 'underwear');
@@ -325,6 +333,7 @@ export class SvgManipulationService {
         // document.getElementById('workingCloth').remove();
         this.remove(document, 'hawaii');
         this.remove(document, 'armor');
+        this.remove(document, 'batman');
         break;
       case 3:
         this.remove(document, 'underwear');
@@ -332,6 +341,7 @@ export class SvgManipulationService {
         this.remove(document, 'workingCloth');
         // document.getElementById('hawaii').remove();
         this.remove(document, 'armor');
+        this.remove(document, 'batman');
         break;
       case 4:
         this.remove(document, 'underwear');
@@ -339,6 +349,15 @@ export class SvgManipulationService {
         this.remove(document, 'workingCloth');
         this.remove(document, 'hawaii');
         // this.remove(document, 'armor');
+        this.remove(document, 'batman');
+        break;
+      case 5:
+        this.remove(document, 'underwear');
+        this.remove(document, 'fancyDress');
+        this.remove(document, 'workingCloth');
+        this.remove(document, 'hawaii');
+        this.remove(document, 'armor');
+        // this.remove(document, 'batman');
         break;
       default:
         console.log(`cloth ${dna.cloths} unknown.`);

@@ -38,6 +38,30 @@ export class RenderController {
     return this.getRenderedMinionWithSize(myWidth, myHeight, dna, res);
   }
 
+  @Get('/renderType/')
+  @Header('Content-Type', 'image/png')
+  async getRenderedMinionOfSpecificType(
+    @Query('type') type: string,
+    @Query('width') width: string,
+    @Query('height') height: string,
+    @Query('text') text: string,
+    @Res() res,
+  ): Promise<any> {
+    const myType = !isNullOrUndefined(type) ? Number.parseInt(type) : 0;
+    const myWidth = !isNullOrUndefined(width) ? Number.parseInt(width) : 500;
+    const myHeight = !isNullOrUndefined(height) ? Number.parseInt(height) : 500;
+    const dna = await new DnaController().getDna();
+    dna.cloths = myType;
+    if (myType > 1) {
+      dna.pocket = false;
+    }
+    if (!isNullOrUndefined(text)) {
+      dna.speechText = [];
+      dna.speechText.push(text);
+    }
+    return this.getRenderedMinionWithSize(myWidth, myHeight, dna, res);
+  }
+
   @Get('/renderRandomWithCookie/')
   @Header('Content-Type', 'image/png')
   async getRenderedMinionWithCookie(

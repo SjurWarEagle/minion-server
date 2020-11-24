@@ -21,6 +21,10 @@ async function bootstrap() {
 
   console.log('Examples:');
   console.log('\tapi:              http://127.0.0.1:3000/api');
+  console.log(
+    '\trender:           http://127.0.0.1:3000/renderType?width=800&height=800&type=1&text=Hallo',
+  );
+  console.log('\trender:           http://127.0.0.1:3000/renderType?type=1');
   console.log('\trender:           http://127.0.0.1:3000/render');
   console.log(
     '\trender:           http://127.0.0.1:3000/render?width=200&height=200',
