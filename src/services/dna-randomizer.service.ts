@@ -3,6 +3,7 @@ import * as chroma from 'chroma-js';
 import { MinionDna } from '../model/minion-dna';
 import { DnaGenerationParameters } from '../model/dna-generation-parameter';
 import { DnaMerger } from './dna-merger';
+import { Cloths } from '../model/cloths';
 
 /**
  * Generates the DNA for a minion by random values.
@@ -21,7 +22,17 @@ export class DnaRandomizerService {
   }
 
   private generateCloth(dna: MinionDna): void {
-    const rnd = this.chance.weighted([0, 1, 2, 3, 4], [2, 2, 90, 2, 100]);
+    const rnd: Cloths = this.chance.weighted(
+      [
+        Cloths.UNDERWEAR,
+        Cloths.DRESS,
+        Cloths.WORKER,
+        Cloths.HAWAII,
+        Cloths.KNIGHT,
+        Cloths.BATMAN,
+      ],
+      [2, 2, 90, 2, 2, 2],
+    );
     dna.pocket = false;
 
     if (rnd === 2) {

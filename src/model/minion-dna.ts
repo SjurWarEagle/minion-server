@@ -1,3 +1,5 @@
+import { Cloths } from './cloths';
+
 export class MinionDnaEye {
   color: number;
   pupilShift: number;
@@ -11,7 +13,7 @@ export class MinionDna {
   public eyeLeft: MinionDnaEye;
   public eyeRight: MinionDnaEye;
   public eye: MinionDnaEye;
-  public cloths: number;
+  public cloths: Cloths;
   public pocket: boolean;
   public gloves: boolean;
   public shoes: boolean;

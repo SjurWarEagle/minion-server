@@ -2,6 +2,7 @@ import { MinionDna, MinionDnaEye } from '../model/minion-dna';
 import { readFileSync } from 'fs';
 import * as chroma from 'chroma-js';
 import { isNullOrUndefined } from 'util';
+import { Cloths } from '../model/cloths';
 
 const DOMParser = new (require('xmldom').DOMParser)();
 
@@ -196,9 +197,9 @@ export class SvgManipulationService {
   private setPocket(document: Document, dna: MinionDna): void {
     if (
       !dna.pocket ||
-      dna.cloths === 0 ||
-      dna.cloths === 1 ||
-      dna.cloths === 3
+      dna.cloths === Cloths.UNDERWEAR ||
+      dna.cloths === Cloths.DRESS ||
+      dna.cloths === Cloths.HAWAII
     ) {
       this.remove(document, 'pocket');
     }
@@ -311,7 +312,7 @@ export class SvgManipulationService {
 
   private setCloth(document: Document, dna: MinionDna): void {
     switch (dna.cloths) {
-      case 0:
+      case Cloths.UNDERWEAR:
         // this.remove(document, 'underwear');
         this.remove(document, 'fancyDress');
         this.remove(document, 'workingCloth');
@@ -319,7 +320,7 @@ export class SvgManipulationService {
         this.remove(document, 'armor');
         this.remove(document, 'batman');
         break;
-      case 1:
+      case Cloths.DRESS:
         this.remove(document, 'underwear');
         // document.getElementById('fancyDress').remove();
         this.remove(document, 'workingCloth');
@@ -327,7 +328,7 @@ export class SvgManipulationService {
         this.remove(document, 'armor');
         this.remove(document, 'batman');
         break;
-      case 2:
+      case Cloths.WORKER:
         this.remove(document, 'underwear');
         this.remove(document, 'fancyDress');
         // document.getElementById('workingCloth').remove();
@@ -335,7 +336,7 @@ export class SvgManipulationService {
         this.remove(document, 'armor');
         this.remove(document, 'batman');
         break;
-      case 3:
+      case Cloths.HAWAII:
         this.remove(document, 'underwear');
         this.remove(document, 'fancyDress');
         this.remove(document, 'workingCloth');
@@ -343,7 +344,7 @@ export class SvgManipulationService {
         this.remove(document, 'armor');
         this.remove(document, 'batman');
         break;
-      case 4:
+      case Cloths.KNIGHT:
         this.remove(document, 'underwear');
         this.remove(document, 'fancyDress');
         this.remove(document, 'workingCloth');
@@ -351,7 +352,7 @@ export class SvgManipulationService {
         // this.remove(document, 'armor');
         this.remove(document, 'batman');
         break;
-      case 5:
+      case Cloths.BATMAN:
         this.remove(document, 'underwear');
         this.remove(document, 'fancyDress');
         this.remove(document, 'workingCloth');
