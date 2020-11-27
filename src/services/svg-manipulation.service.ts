@@ -154,7 +154,11 @@ export class SvgManipulationService {
   }
 
   private setHair(document: Document, hair: number, cloths: number): void {
-    if (cloths === 4 || cloths === 5) {
+    if (
+      cloths === Cloths.KNIGHT ||
+      cloths === Cloths.BATMAN ||
+      cloths === Cloths.COOK
+    ) {
       hair = 0;
     }
 
@@ -319,6 +323,7 @@ export class SvgManipulationService {
         this.remove(document, 'hawaii');
         this.remove(document, 'armor');
         this.remove(document, 'batman');
+        this.remove(document, 'cook');
         break;
       case Cloths.DRESS:
         this.remove(document, 'underwear');
@@ -327,6 +332,7 @@ export class SvgManipulationService {
         this.remove(document, 'hawaii');
         this.remove(document, 'armor');
         this.remove(document, 'batman');
+        this.remove(document, 'cook');
         break;
       case Cloths.WORKER:
         this.remove(document, 'underwear');
@@ -335,6 +341,7 @@ export class SvgManipulationService {
         this.remove(document, 'hawaii');
         this.remove(document, 'armor');
         this.remove(document, 'batman');
+        this.remove(document, 'cook');
         break;
       case Cloths.HAWAII:
         this.remove(document, 'underwear');
@@ -343,6 +350,7 @@ export class SvgManipulationService {
         // document.getElementById('hawaii').remove();
         this.remove(document, 'armor');
         this.remove(document, 'batman');
+        this.remove(document, 'cook');
         break;
       case Cloths.KNIGHT:
         this.remove(document, 'underwear');
@@ -351,6 +359,7 @@ export class SvgManipulationService {
         this.remove(document, 'hawaii');
         // this.remove(document, 'armor');
         this.remove(document, 'batman');
+        this.remove(document, 'cook');
         break;
       case Cloths.BATMAN:
         this.remove(document, 'underwear');
@@ -359,6 +368,16 @@ export class SvgManipulationService {
         this.remove(document, 'hawaii');
         this.remove(document, 'armor');
         // this.remove(document, 'batman');
+        this.remove(document, 'cook');
+        break;
+      case Cloths.COOK:
+        this.remove(document, 'underwear');
+        this.remove(document, 'fancyDress');
+        this.remove(document, 'workingCloth');
+        this.remove(document, 'hawaii');
+        this.remove(document, 'armor');
+        this.remove(document, 'batman');
+        // this.remove(document, 'cook');
         break;
       default:
         console.log(`cloth ${dna.cloths} unknown.`);
@@ -375,6 +394,7 @@ export class SvgManipulationService {
         this.remove(document, `${hand}Teddy`);
         this.remove(document, `${hand}Lollie`);
         this.remove(document, `${hand}Sign`);
+        this.remove(document, `${hand}Towel`);
         break;
       case 1:
         // this.svg.getElementById(`${hand}Banana`).remove();
@@ -384,6 +404,7 @@ export class SvgManipulationService {
         this.remove(document, `${hand}Teddy`);
         this.remove(document, `${hand}Lollie`);
         this.remove(document, `${hand}Sign`);
+        this.remove(document, `${hand}Towel`);
         break;
       case 2:
         this.remove(document, `${hand}Banana`);
@@ -393,6 +414,7 @@ export class SvgManipulationService {
         this.remove(document, `${hand}Teddy`);
         this.remove(document, `${hand}Lollie`);
         this.remove(document, `${hand}Sign`);
+        this.remove(document, `${hand}Towel`);
         break;
       case 3:
         this.remove(document, `${hand}Banana`);
@@ -402,6 +424,7 @@ export class SvgManipulationService {
         this.remove(document, `${hand}Teddy`);
         this.remove(document, `${hand}Lollie`);
         this.remove(document, `${hand}Sign`);
+        this.remove(document, `${hand}Towel`);
         break;
       case 4:
         this.remove(document, `${hand}Banana`);
@@ -411,15 +434,17 @@ export class SvgManipulationService {
         this.remove(document, `${hand}Teddy`);
         this.remove(document, `${hand}Lollie`);
         this.remove(document, `${hand}Sign`);
+        this.remove(document, `${hand}Towel`);
         break;
       case 5:
         this.remove(document, `${hand}Banana`);
         this.remove(document, `${hand}Wrench`);
         this.remove(document, `${hand}Hammer`);
         this.remove(document, `${hand}Router`);
-        // this.svg.getElementById(`${hand}Teddy`).remove();
+        // this.remove(document, `${hand}Teddy`);
         this.remove(document, `${hand}Lollie`);
         this.remove(document, `${hand}Sign`);
+        this.remove(document, `${hand}Towel`);
         break;
       case 6:
         this.remove(document, `${hand}Banana`);
@@ -427,8 +452,9 @@ export class SvgManipulationService {
         this.remove(document, `${hand}Hammer`);
         this.remove(document, `${hand}Router`);
         this.remove(document, `${hand}Teddy`);
-        // this.svg.getElementById(`${hand}Lollie`).remove();
+        // this.remove(document, `${hand}Lollie`);
         this.remove(document, `${hand}Sign`);
+        this.remove(document, `${hand}Towel`);
         break;
       case 7:
         this.remove(document, `${hand}Banana`);
@@ -437,7 +463,18 @@ export class SvgManipulationService {
         this.remove(document, `${hand}Router`);
         this.remove(document, `${hand}Teddy`);
         this.remove(document, `${hand}Lollie`);
-        // this.svg.getElementById(`${hand}Sign`).remove();
+        // this.remove(document, `${hand}Sign`);
+        this.remove(document, `${hand}Towel`);
+        break;
+      case 8:
+        this.remove(document, `${hand}Banana`);
+        this.remove(document, `${hand}Wrench`);
+        this.remove(document, `${hand}Hammer`);
+        this.remove(document, `${hand}Router`);
+        this.remove(document, `${hand}Teddy`);
+        this.remove(document, `${hand}Lollie`);
+        this.remove(document, `${hand}Sign`);
+        // this.remove(document, `${hand}Towel`);
         break;
     }
   }

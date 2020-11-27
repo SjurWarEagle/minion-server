@@ -16,8 +16,8 @@ export class DnaRandomizerService {
 
   private getItemInHandHand(): number {
     return this.chance.weighted(
-      [0, 1, 2, 3, 4, 5, 6, 7],
-      [60, 10, 10, 10, 2, 2, 2, 2],
+      [0, 1, 2, 3, 4, 5, 6, 7, 8],
+      [60, 10, 10, 10, 2, 2, 2, 2, 5],
     );
   }
 
@@ -30,8 +30,9 @@ export class DnaRandomizerService {
         Cloths.HAWAII,
         Cloths.KNIGHT,
         Cloths.BATMAN,
+        Cloths.COOK,
       ],
-      [2, 2, 90, 2, 2, 2],
+      [2, 2, 90, 2, 2, 2, 2],
     );
     dna.pocket = false;
 

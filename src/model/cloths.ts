@@ -5,4 +5,5 @@ export enum Cloths {
   HAWAII,
   KNIGHT,
   BATMAN,
+  COOK,
 }
