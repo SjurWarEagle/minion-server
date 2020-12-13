@@ -3,7 +3,7 @@ RUN mkdir -p /project/
 
 RUN apt update
 RUN apt upgrade -y
-DD files/fonts.conf /etc/fonts/fonts.conf
+ADD files/fonts.conf /etc/fonts/fonts.conf
 
 RUN git clone https://github.com/SjurWarEagle/minion-server
 WORKDIR /minion-server
