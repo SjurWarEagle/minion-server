@@ -45,7 +45,7 @@
   },
   "devDependencies": {
     "@nestjs/cli": "7.5.4",
-    "@nestjs/microservices": "7.6.1",
+    "@nestjs/microservices": "7.6.13",
     "@nestjs/schematics": "7.2.5",
     "@nestjs/testing": "7.6.1",
     "@types/chance": "1.1.1",
