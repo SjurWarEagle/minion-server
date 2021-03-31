@@ -5,28 +5,29 @@ import {
   Header,
   Post,
   Query,
-  Res,
-} from '@nestjs/common';
-import { Readable } from 'stream';
-import { EventEmitter } from 'events';
-import { SvgManipulationService } from '../services/svg-manipulation.service';
-import { isNullOrUndefined } from 'util';
-import { DnaController } from './dna.controller';
-import { MinionDna } from '../model/minion-dna';
-import * as sharp from 'sharp';
+  Res
+} from "@nestjs/common";
+import { Readable } from "stream";
+import { EventEmitter } from "events";
+import { SvgManipulationService } from "../services/svg-manipulation.service";
+import { isNullOrUndefined } from "util";
+import { DnaController } from "./dna.controller";
+import { MinionDna } from "../model/minion-dna";
+import * as sharp from "sharp";
 // import * as request from 'request-promise';
-const request = require('request-promise');
+const request = require("request-promise");
 
 @Controller()
 export class RenderController {
-  @Get('/render/')
-  @Get('/renderRandom/')
-  @Header('Content-Type', 'image/png')
+  @Get("/render/")
+  @Get("/renderRandom/")
+  @Header("Content-Type", "image/png")
   async getRenderedMinion(
-    @Query('width') width: string,
-    @Query('height') height: string,
-    @Query('text') text: string,
-    @Res() res,
+    @Query("width") width: string,
+    @Query("height") height: string,
+    @Query("text") text: string,
+    @Query("blackWhite") blackWhite: boolean,
+    @Res() res
   ): Promise<any> {
     const myWidth = !isNullOrUndefined(width) ? Number.parseInt(width) : 500;
     const myHeight = !isNullOrUndefined(height) ? Number.parseInt(height) : 500;
@@ -35,17 +36,17 @@ export class RenderController {
       dna.speechText = [];
       dna.speechText.push(text);
     }
-    return this.getRenderedMinionWithSize(myWidth, myHeight, dna, res);
+    return this.getRenderedMinionWithSize(myWidth, myHeight, dna, res, blackWhite);
   }
 
-  @Get('/renderType/')
-  @Header('Content-Type', 'image/png')
+  @Get("/renderType/")
+  @Header("Content-Type", "image/png")
   async getRenderedMinionOfSpecificType(
-    @Query('type') type: string,
-    @Query('width') width: string,
-    @Query('height') height: string,
-    @Query('text') text: string,
-    @Res() res,
+    @Query("type") type: string,
+    @Query("width") width: string,
+    @Query("height") height: string,
+    @Query("text") text: string,
+    @Res() res
   ): Promise<any> {
     const myType = !isNullOrUndefined(type) ? Number.parseInt(type) : 0;
     const myWidth = !isNullOrUndefined(width) ? Number.parseInt(width) : 500;
@@ -62,21 +63,21 @@ export class RenderController {
     return this.getRenderedMinionWithSize(myWidth, myHeight, dna, res);
   }
 
-  @Get('/renderRandomWithCookie/')
-  @Header('Content-Type', 'image/png')
+  @Get("/renderRandomWithCookie/")
+  @Header("Content-Type", "image/png")
   async getRenderedMinionWithCookie(
-    @Query('width') width: string,
-    @Query('height') height: string,
-    @Res() res,
+    @Query("width") width: string,
+    @Query("height") height: string,
+    @Res() res
   ): Promise<any> {
     const myWidth = !isNullOrUndefined(width) ? Number.parseInt(width) : 500;
     const myHeight = !isNullOrUndefined(height) ? Number.parseInt(height) : 500;
     const dna = await new DnaController().getDna();
 
-    let text = '';
+    let text = "";
 
     while (text.length < 30 || text.length > 200) {
-      text = JSON.parse(await request('http://yerkee.com/api/fortune/wisdom'))
+      text = JSON.parse(await request("http://yerkee.com/api/fortune/wisdom"))
         .fortune;
     }
 
@@ -88,13 +89,13 @@ export class RenderController {
     return this.getRenderedMinionWithSize(myWidth, myHeight, dna, res);
   }
 
-  @Post('/renderDna/')
-  @Header('Content-Type', 'image/png')
+  @Post("/renderDna/")
+  @Header("Content-Type", "image/png")
   async getRenderedMinionFromDna(
-    @Query('width') width: string,
-    @Query('height') height: string,
+    @Query("width") width: string,
+    @Query("height") height: string,
     @Body() body,
-    @Res() res,
+    @Res() res
   ): Promise<any> {
     const myWidth = !isNullOrUndefined(width) ? Number.parseInt(width) : 500;
     const myHeight = !isNullOrUndefined(height) ? Number.parseInt(height) : 500;
@@ -103,14 +104,14 @@ export class RenderController {
     return this.getRenderedMinionWithSize(myWidth, myHeight, dna, res);
   }
 
-  @Get('/renderDna/')
-  @Header('Content-Type', 'image/png')
+  @Get("/renderDna/")
+  @Header("Content-Type", "image/png")
   async getRenderedMinionFromDna2(
-    @Query('width') width: string,
-    @Query('height') height: string,
-    @Query('dna') dnaString: string,
+    @Query("width") width: string,
+    @Query("height") height: string,
+    @Query("dna") dnaString: string,
     @Body() body,
-    @Res() res,
+    @Res() res
   ): Promise<any> {
     const myWidth = !isNullOrUndefined(width) ? Number.parseInt(width) : 500;
     const myHeight = !isNullOrUndefined(height) ? Number.parseInt(height) : 500;
@@ -125,10 +126,11 @@ export class RenderController {
     height: number,
     dna: MinionDna,
     @Res() res,
+    blackWhite?: boolean
   ): Promise<any> {
     // Event emitter only stops the program from terminating before the async function has been run
     const finishEventEmitter = new EventEmitter();
-    finishEventEmitter.on('finish', () => {
+    finishEventEmitter.on("finish", () => {
       // process.exit()
     });
 
@@ -137,12 +139,17 @@ export class RenderController {
 
     async function run(): Promise<void> {
       try {
-        const buf = await sharp(Buffer.from(svg), { density: 500 })
+        let img = await sharp(Buffer.from(svg), { density: 500 })
           .resize(width, height, {
-            fit: 'contain',
-            kernel: 'mitchell',
-          })
-          .sharpen()
+            fit: "contain",
+            kernel: "mitchell"
+          });
+
+        if (blackWhite) {
+          img = await img.threshold(100);
+        }
+
+        const buf = await img.sharpen()
           .png()
           .toBuffer();
 
@@ -154,7 +161,7 @@ export class RenderController {
       } catch (err) {
         console.error(err);
       } finally {
-        finishEventEmitter.emit('finish');
+        finishEventEmitter.emit("finish");
       }
     }
 
