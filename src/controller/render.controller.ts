@@ -14,7 +14,7 @@ import { isNullOrUndefined } from "util";
 import { DnaController } from "./dna.controller";
 import { MinionDna } from "../model/minion-dna";
 import * as sharp from "sharp";
-// import * as request from 'request-promise';
+import { ApiPropertyOptional } from "@nestjs/swagger";
 const request = require("request-promise");
 
 @Controller()
@@ -25,9 +25,9 @@ export class RenderController {
   async getRenderedMinion(
     @Query("width") width: string,
     @Query("height") height: string,
-    @Query("text") text: string,
     @Query("blackWhite") blackWhite: boolean,
-    @Res() res
+    @Res() res,
+    @Query("text") text?: string
   ): Promise<any> {
     const myWidth = !isNullOrUndefined(width) ? Number.parseInt(width) : 500;
     const myHeight = !isNullOrUndefined(height) ? Number.parseInt(height) : 500;
