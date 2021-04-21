@@ -106,7 +106,7 @@ export class RenderController {
     return this.getRenderedMinionWithSize(myWidth, myHeight, dna, res);
   }
 
-  @Get("/apirenderDna")
+  @Get("/api/renderDna")
   // @Get("/renderDna/")
   @Header("Content-Type", "image/png")
   async getRenderedMinionFromDna2(
