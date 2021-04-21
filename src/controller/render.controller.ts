@@ -14,7 +14,6 @@ import { isNullOrUndefined } from "util";
 import { DnaController } from "./dna.controller";
 import { MinionDna } from "../model/minion-dna";
 import * as sharp from "sharp";
-import { ApiPropertyOptional } from "@nestjs/swagger";
 const request = require("request-promise");
 
 @Controller()
@@ -116,8 +115,12 @@ export class RenderController {
     const myWidth = !isNullOrUndefined(width) ? Number.parseInt(width) : 500;
     const myHeight = !isNullOrUndefined(height) ? Number.parseInt(height) : 500;
     // TODO add some checks, that this really is a MinionDna
-    //console.log('dnaString', decodeURI(dnaString));
-    const dna = JSON.parse(decodeURI(dnaString)) as MinionDna;
+    let dna;
+    try{
+      dna = JSON.parse(decodeURI(dnaString)) as MinionDna;
+    }catch (e){
+      return;
+    }
     return this.getRenderedMinionWithSize(myWidth, myHeight, dna, res);
   }
 
