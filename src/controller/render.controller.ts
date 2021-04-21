@@ -18,8 +18,9 @@ const request = require("request-promise");
 
 @Controller()
 export class RenderController {
-  @Get("/render/")
-  @Get("/renderRandom/")
+  @Get("render/*")
+  // @Get("/render/")
+  // @Get("/renderRandom/")
   @Header("Content-Type", "image/png")
   async getRenderedMinion(
     @Query("width") width: string,
@@ -62,7 +63,8 @@ export class RenderController {
     return this.getRenderedMinionWithSize(myWidth, myHeight, dna, res);
   }
 
-  @Get("/renderRandomWithCookie/")
+  @Get("renderRandomWithCookie/*")
+  // @Get("/renderRandomWithCookie/")
   @Header("Content-Type", "image/png")
   async getRenderedMinionWithCookie(
     @Query("width") width: string,
@@ -88,7 +90,8 @@ export class RenderController {
     return this.getRenderedMinionWithSize(myWidth, myHeight, dna, res);
   }
 
-  @Post("/renderDna/")
+  @Post("renderDna/*")
+  // @Post("/renderDna/")
   @Header("Content-Type", "image/png")
   async getRenderedMinionFromDna(
     @Query("width") width: string,
@@ -103,7 +106,8 @@ export class RenderController {
     return this.getRenderedMinionWithSize(myWidth, myHeight, dna, res);
   }
 
-  @Get("/renderDna/")
+  @Get("renderDna/*")
+  // @Get("/renderDna/")
   @Header("Content-Type", "image/png")
   async getRenderedMinionFromDna2(
     @Query("width") width: string,
