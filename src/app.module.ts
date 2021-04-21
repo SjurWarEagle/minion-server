@@ -6,9 +6,9 @@ import { RenderController } from './controller/render.controller';
 
 @Module({
   imports: [
-    ServeStaticModule.forRoot({
-      rootPath: __dirname + '/../src/assets/html',
-    }),
+    // ServeStaticModule.forRoot({
+    //   rootPath: __dirname + '/../src/assets/html',
+    // }),
   ],
   controllers: [
     RenderController, //
