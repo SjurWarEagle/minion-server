@@ -157,6 +157,7 @@ export class SvgManipulationService {
     if (
       cloths === Cloths.KNIGHT ||
       cloths === Cloths.BATMAN ||
+      cloths === Cloths.CATERPILLAR ||
       cloths === Cloths.COOK
     ) {
       hair = 0;
@@ -322,72 +323,29 @@ export class SvgManipulationService {
   }
 
   private setCloth(document: Document, dna: MinionDna): void {
-    switch (dna.cloths) {
-      case Cloths.UNDERWEAR:
-        // this.remove(document, 'underwear');
-        this.remove(document, "fancyDress");
-        this.remove(document, "workingCloth");
-        this.remove(document, "hawaii");
-        this.remove(document, "armor");
-        this.remove(document, "batman");
-        this.remove(document, "cook");
-        break;
-      case Cloths.DRESS:
-        this.remove(document, "underwear");
-        // document.getElementById('fancyDress').remove();
-        this.remove(document, "workingCloth");
-        this.remove(document, "hawaii");
-        this.remove(document, "armor");
-        this.remove(document, "batman");
-        this.remove(document, "cook");
-        break;
-      case Cloths.WORKER:
-        this.remove(document, "underwear");
-        this.remove(document, "fancyDress");
-        // document.getElementById('workingCloth').remove();
-        this.remove(document, "hawaii");
-        this.remove(document, "armor");
-        this.remove(document, "batman");
-        this.remove(document, "cook");
-        break;
-      case Cloths.HAWAII:
-        this.remove(document, "underwear");
-        this.remove(document, "fancyDress");
-        this.remove(document, "workingCloth");
-        // document.getElementById('hawaii').remove();
-        this.remove(document, "armor");
-        this.remove(document, "batman");
-        this.remove(document, "cook");
-        break;
-      case Cloths.KNIGHT:
-        this.remove(document, "underwear");
-        this.remove(document, "fancyDress");
-        this.remove(document, "workingCloth");
-        this.remove(document, "hawaii");
-        // this.remove(document, 'armor');
-        this.remove(document, "batman");
-        this.remove(document, "cook");
-        break;
-      case Cloths.BATMAN:
-        this.remove(document, "underwear");
-        this.remove(document, "fancyDress");
-        this.remove(document, "workingCloth");
-        this.remove(document, "hawaii");
-        this.remove(document, "armor");
-        // this.remove(document, 'batman');
-        this.remove(document, "cook");
-        break;
-      case Cloths.COOK:
-        this.remove(document, "underwear");
-        this.remove(document, "fancyDress");
-        this.remove(document, "workingCloth");
-        this.remove(document, "hawaii");
-        this.remove(document, "armor");
-        this.remove(document, "batman");
-        // this.remove(document, 'cook');
-        break;
-      default:
-        console.log(`cloth ${dna.cloths} unknown.`);
+    if (dna.cloths != Cloths.UNDERWEAR) {
+      this.remove(document, "underwear");
+    }
+    if (dna.cloths != Cloths.DRESS) {
+      this.remove(document, "fancyDress");
+    }
+    if (dna.cloths != Cloths.WORKER) {
+      this.remove(document, "workingCloth");
+    }
+    if (dna.cloths != Cloths.HAWAII) {
+      this.remove(document, "hawaii");
+    }
+    if (dna.cloths != Cloths.KNIGHT) {
+      this.remove(document, "armor");
+    }
+    if (dna.cloths != Cloths.BATMAN) {
+      this.remove(document, "batman");
+    }
+    if (dna.cloths != Cloths.COOK) {
+      this.remove(document, "cook");
+    }
+    if (dna.cloths != Cloths.CATERPILLAR) {
+      this.remove(document, "caterpillar");
     }
   }
 
