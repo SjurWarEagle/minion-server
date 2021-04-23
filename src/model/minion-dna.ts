@@ -1,4 +1,4 @@
-import { Cloths } from './cloths';
+import { Cloths } from "./cloths";
 
 export class MinionDnaEye {
   color: number;
@@ -8,7 +8,7 @@ export class MinionDnaEye {
 }
 
 export class MinionDna {
-  public name = 'TODO';
+  public name = "TODO";
   public twoEyes: boolean;
   public eyeLeft: MinionDnaEye;
   public eyeRight: MinionDnaEye;
@@ -24,7 +24,7 @@ export class MinionDna {
   /**
    * The text the minion is saying in the speech bubble
    */
-  public speechText: string[] = ['', '', '', '', '', ''];
+  public speechText: string = "";
   /**
    * The way the mouth is formed
    */

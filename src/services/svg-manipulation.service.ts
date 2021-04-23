@@ -216,7 +216,7 @@ export class SvgManipulationService {
 
     let speechBubble = document.getElementById("speechBubble");
     let path = speechBubble.getAttribute("d");
-    const shiftDown = (dna.speechText.length - 4) * 10;
+    const shiftDown = (dna.speechText.split('\n').length - 4) * 10;
     // left center
     path = path.replace(
       "4.993,28.117L4.993,61.634C4.993,69.3",
@@ -243,7 +243,8 @@ export class SvgManipulationService {
 
     const maxLength = 25;
     const newTextBlock: string[] = [];
-    dna.speechText.forEach((text) => {
+    console.log('dna.speechText',dna.speechText);
+    dna.speechText.split('\n').forEach((text) => {
       let newLine = "";
       text.split(" ").forEach((word) => {
         if (newLine.length + word.length < maxLength) {
@@ -256,18 +257,19 @@ export class SvgManipulationService {
       });
       newTextBlock.push(newLine);
     });
-    dna.speechText = newTextBlock;
+    dna.speechText = newTextBlock.join('\n');
   }
 
   private setSpeechText(document: Document, dna: MinionDna): void {
     if (this.isSpeechEmpty(dna.speechText)) {
       this.remove(document, "speech");
     } else {
-      for (let i = 0; i < dna.speechText.length; i++) {
+      let speechTextArray=dna.speechText.split('\n');
+      for (let i = 0; i < speechTextArray.length; i++) {
         if (i === 0) {
           let element = document.getElementById("speechTextLine" + i);
-          (element.lastChild as any).nodeValue = dna.speechText[i];
-          (element.lastChild as any).data = dna.speechText[i];
+          (element.lastChild as any).nodeValue = speechTextArray[i];
+          (element.lastChild as any).data = speechTextArray[i];
         } else {
           let elementForCloning = document.getElementById("speechTextLine0");
           // console.log('i=' + i);
@@ -291,7 +293,7 @@ export class SvgManipulationService {
           );
           // console.log('ele.x=' + element.getAttribute('x'));
           // console.log('ele.y=' + element.getAttribute('y'));
-          (element as any).textContent = dna.speechText[i];
+          (element as any).textContent = speechTextArray[i];
           elementForCloning.parentNode.appendChild(element);
         }
       }
@@ -300,7 +302,7 @@ export class SvgManipulationService {
     }
   }
 
-  private isSpeechEmpty(speechText: string[]): boolean {
+  private isSpeechEmpty(speechText: string): boolean {
     if (speechText === null || speechText === undefined) {
       return true;
     }

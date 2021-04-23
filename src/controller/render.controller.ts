@@ -33,8 +33,7 @@ export class RenderController {
     const myHeight = !isNullOrUndefined(height) ? Number.parseInt(height) : 500;
     const dna = await new DnaController().getDna();
     if (!isNullOrUndefined(text)) {
-      dna.speechText = [];
-      dna.speechText.push(text);
+      dna.speechText = text;
     }
     return this.getRenderedMinionWithSize(myWidth, myHeight, dna, res, blackWhite);
   }
@@ -57,8 +56,8 @@ export class RenderController {
       dna.pocket = false;
     }
     if (!isNullOrUndefined(text)) {
-      dna.speechText = [];
-      dna.speechText.push(text);
+      dna.speechText+='\n';
+      dna.speechText+=text;
     }
     return this.getRenderedMinionWithSize(myWidth, myHeight, dna, res);
   }
@@ -84,8 +83,8 @@ export class RenderController {
 
     // console.log('text', text);
     if (!isNullOrUndefined(text)) {
-      dna.speechText = [];
-      dna.speechText.push(text);
+      dna.speechText+='\n';
+      dna.speechText+=text;
     }
     return this.getRenderedMinionWithSize(myWidth, myHeight, dna, res);
   }
