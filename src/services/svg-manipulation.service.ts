@@ -216,7 +216,7 @@ export class SvgManipulationService {
 
     let speechBubble = document.getElementById("speechBubble");
     let path = speechBubble.getAttribute("d");
-    const shiftDown = (dna.speechText.split('\n').length - 4) * 10;
+    const shiftDown = (dna.speechText.split("\n").length - 4) * 10;
     // left center
     path = path.replace(
       "4.993,28.117L4.993,61.634C4.993,69.3",
@@ -243,8 +243,8 @@ export class SvgManipulationService {
 
     const maxLength = 25;
     const newTextBlock: string[] = [];
-    console.log('dna.speechText',dna.speechText);
-    dna.speechText.split('\n').forEach((text) => {
+    console.log("dna.speechText", dna.speechText);
+    dna.speechText.split("\n").forEach((text) => {
       let newLine = "";
       text.split(" ").forEach((word) => {
         if (newLine.length + word.length < maxLength) {
@@ -257,14 +257,15 @@ export class SvgManipulationService {
       });
       newTextBlock.push(newLine);
     });
-    dna.speechText = newTextBlock.join('\n');
+    dna.speechText = newTextBlock.join("\n");
   }
 
   private setSpeechText(document: Document, dna: MinionDna): void {
+    console.log("speechText", dna.speechText);
     if (this.isSpeechEmpty(dna.speechText)) {
       this.remove(document, "speech");
     } else {
-      let speechTextArray=dna.speechText.split('\n');
+      let speechTextArray = dna.speechText.split("\n");
       for (let i = 0; i < speechTextArray.length; i++) {
         if (i === 0) {
           let element = document.getElementById("speechTextLine" + i);
