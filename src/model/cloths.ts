@@ -7,4 +7,5 @@ export enum Cloths {
   BATMAN,
   COOK,
   CATERPILLAR,
+  DINO,
 }

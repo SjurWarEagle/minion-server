@@ -158,6 +158,7 @@ export class SvgManipulationService {
       cloths === Cloths.KNIGHT ||
       cloths === Cloths.BATMAN ||
       cloths === Cloths.CATERPILLAR ||
+      cloths === Cloths.DINO ||
       cloths === Cloths.COOK
     ) {
       hair = 0;
@@ -346,6 +347,9 @@ export class SvgManipulationService {
     }
     if (dna.cloths != Cloths.CATERPILLAR) {
       this.remove(document, "caterpillar");
+    }
+    if (dna.cloths != Cloths.DINO) {
+      this.remove(document, "dino");
     }
   }
 
