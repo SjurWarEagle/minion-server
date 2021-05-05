@@ -8,4 +8,5 @@ export enum Cloths {
   COOK,
   CATERPILLAR,
   DINO,
+  PENGUIN,
 }

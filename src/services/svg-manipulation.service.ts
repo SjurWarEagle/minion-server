@@ -159,7 +159,8 @@ export class SvgManipulationService {
       cloths === Cloths.BATMAN ||
       cloths === Cloths.CATERPILLAR ||
       cloths === Cloths.DINO ||
-      cloths === Cloths.COOK
+      cloths === Cloths.COOK ||
+      cloths === Cloths.PENGUIN
     ) {
       hair = 0;
     }
@@ -205,7 +206,8 @@ export class SvgManipulationService {
       !dna.pocket ||
       dna.cloths === Cloths.UNDERWEAR ||
       dna.cloths === Cloths.DRESS ||
-      dna.cloths === Cloths.HAWAII
+      dna.cloths === Cloths.HAWAII||
+      dna.cloths === Cloths.PENGUIN
     ) {
       this.remove(document, "pocket");
     }
@@ -351,100 +353,39 @@ export class SvgManipulationService {
     if (dna.cloths != Cloths.DINO) {
       this.remove(document, "dino");
     }
+    if (dna.cloths != Cloths.PENGUIN) {
+      this.remove(document, "penguin");
+    }
   }
 
   private setItemInHands(document: Document, hand: string, itemInHand: number) {
-    switch (itemInHand) {
-      case 0:
-        this.remove(document, `${hand}Banana`);
-        this.remove(document, `${hand}Wrench`);
-        this.remove(document, `${hand}Hammer`);
-        this.remove(document, `${hand}Router`);
-        this.remove(document, `${hand}Teddy`);
-        this.remove(document, `${hand}Lollie`);
-        this.remove(document, `${hand}Sign`);
-        this.remove(document, `${hand}Towel`);
-        break;
-      case 1:
-        // this.svg.getElementById(`${hand}Banana`).remove();
-        this.remove(document, `${hand}Wrench`);
-        this.remove(document, `${hand}Hammer`);
-        this.remove(document, `${hand}Router`);
-        this.remove(document, `${hand}Teddy`);
-        this.remove(document, `${hand}Lollie`);
-        this.remove(document, `${hand}Sign`);
-        this.remove(document, `${hand}Towel`);
-        break;
-      case 2:
-        this.remove(document, `${hand}Banana`);
-        // this.svg.getElementById(`${hand}Wrench`).remove();
-        this.remove(document, `${hand}Hammer`);
-        this.remove(document, `${hand}Router`);
-        this.remove(document, `${hand}Teddy`);
-        this.remove(document, `${hand}Lollie`);
-        this.remove(document, `${hand}Sign`);
-        this.remove(document, `${hand}Towel`);
-        break;
-      case 3:
-        this.remove(document, `${hand}Banana`);
-        this.remove(document, `${hand}Wrench`);
-        // this.svg.getElementById(`${hand}Hammer`).remove();
-        this.remove(document, `${hand}Router`);
-        this.remove(document, `${hand}Teddy`);
-        this.remove(document, `${hand}Lollie`);
-        this.remove(document, `${hand}Sign`);
-        this.remove(document, `${hand}Towel`);
-        break;
-      case 4:
-        this.remove(document, `${hand}Banana`);
-        this.remove(document, `${hand}Wrench`);
-        this.remove(document, `${hand}Hammer`);
-        // this.svg.getElementById(`${hand}Router`).remove();
-        this.remove(document, `${hand}Teddy`);
-        this.remove(document, `${hand}Lollie`);
-        this.remove(document, `${hand}Sign`);
-        this.remove(document, `${hand}Towel`);
-        break;
-      case 5:
-        this.remove(document, `${hand}Banana`);
-        this.remove(document, `${hand}Wrench`);
-        this.remove(document, `${hand}Hammer`);
-        this.remove(document, `${hand}Router`);
-        // this.remove(document, `${hand}Teddy`);
-        this.remove(document, `${hand}Lollie`);
-        this.remove(document, `${hand}Sign`);
-        this.remove(document, `${hand}Towel`);
-        break;
-      case 6:
-        this.remove(document, `${hand}Banana`);
-        this.remove(document, `${hand}Wrench`);
-        this.remove(document, `${hand}Hammer`);
-        this.remove(document, `${hand}Router`);
-        this.remove(document, `${hand}Teddy`);
-        // this.remove(document, `${hand}Lollie`);
-        this.remove(document, `${hand}Sign`);
-        this.remove(document, `${hand}Towel`);
-        break;
-      case 7:
-        this.remove(document, `${hand}Banana`);
-        this.remove(document, `${hand}Wrench`);
-        this.remove(document, `${hand}Hammer`);
-        this.remove(document, `${hand}Router`);
-        this.remove(document, `${hand}Teddy`);
-        this.remove(document, `${hand}Lollie`);
-        // this.remove(document, `${hand}Sign`);
-        this.remove(document, `${hand}Towel`);
-        break;
-      case 8:
-        this.remove(document, `${hand}Banana`);
-        this.remove(document, `${hand}Wrench`);
-        this.remove(document, `${hand}Hammer`);
-        this.remove(document, `${hand}Router`);
-        this.remove(document, `${hand}Teddy`);
-        this.remove(document, `${hand}Lollie`);
-        this.remove(document, `${hand}Sign`);
-        // this.remove(document, `${hand}Towel`);
-        break;
+    if (itemInHand != 0){
+      this.remove(document, `${hand}Banana`);
     }
+    if (itemInHand != 1){
+      this.remove(document, `${hand}Wrench`);
+    }
+    if (itemInHand != 2){
+      this.remove(document, `${hand}Hammer`);
+    }
+    if (itemInHand != 3){
+      this.remove(document, `${hand}Router`);
+    }
+    if (itemInHand != 4){
+      this.remove(document, `${hand}Teddy`);
+    }
+    if (itemInHand != 5){
+      this.remove(document, `${hand}Lollie`);
+    }
+    if (itemInHand != 6){
+      this.remove(document, `${hand}Sign`);
+    }
+    if (itemInHand != 7){
+      this.remove(document, `${hand}Towel`);
+    }
+    if (itemInHand != 8){
+      this.remove(document, `${hand}Ice`);
+    }
+
   }
 }
